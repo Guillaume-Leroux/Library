@@ -1,0 +1,229 @@
+.heroTitle {
+    font-size: var(--fs-5);
+    margin: 0 0 var(--space-5);
+}
+
+.section {
+    margin-bottom: var(--space-8);
+}
+
+/* Filter panel */
+.panel {
+    background: var(--surface);
+    border: var(--border-1) solid var(--border);
+    border-radius: var(--r-3);
+    box-shadow: var(--shadow-1);
+    padding: var(--space-6);
+}
+
+.panelHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.panelTitle {
+    font-size: var(--fs-4);
+    margin: 0;
+}
+
+.panelHint {
+    color: var(--muted);
+    font-size: var(--fs-2);
+    margin: 0;
+}
+
+/* Form layout */
+.form {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+    .form {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.label {
+    font-size: var(--fs-2);
+    color: var(--text-2);
+    font-weight: 600;
+}
+
+.input {
+    font-size: var(--fs-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--r-2);
+    border: var(--border-1) solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.input::placeholder {
+    color: var(--muted);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+}
+
+/* Buttons */
+.button {
+    font-size: var(--fs-3);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--r-2);
+    border: var(--border-1) solid var(--primary);
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    transition: background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+
+.button:hover {
+    background: var(--primary-2);
+    transform: translateY(-1px);
+}
+
+.buttonSecondary {
+    font-size: var(--fs-3);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--r-2);
+    border: var(--border-1) solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.buttonSecondary:hover {
+    background: var(--surface-2);
+}
+
+/* States */
+.center {
+    text-align: center;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.error {
+    color: var(--danger);
+    padding: var(--space-4);
+    border: var(--border-1) solid var(--danger);
+    border-radius: var(--r-2);
+    background: color-mix(in srgb, var(--danger) 8%, transparent);
+}
+
+@supports not (color: color-mix(in srgb, white 50%, black)) {
+    .error {
+        background: rgba(220, 38, 38, 0.08);
+    }
+}
+
+/* Results grid */
+.grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+
+/* Result card (reuses your visual language) */
+.card {
+    border-radius: var(--r-3);
+    background: var(--surface);
+    border: var(--border-1) solid var(--border);
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-2);
+}
+
+.cover {
+    position: relative;
+    background: var(--surface-2);
+}
+
+.cover::before {
+    content: "";
+    display: block;
+    padding-top: 66.666%; /* ~3:2 to avoid super tall cards */
+}
+
+.coverInner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.coverImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.noImage {
+    color: var(--muted);
+    font-size: var(--fs-2);
+}
+
+.cardBody {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    flex: 1;
+}
+
+.bookLink {
+    font-size: var(--fs-4);
+    font-weight: 750;
+    color: var(--text);
+    text-decoration: none;
+    line-height: var(--lh-tight);
+}
+
+.bookLink:hover {
+    text-decoration: underline;
+}
+
+.author {
+    margin: 0;
+    color: var(--text-2);
+}
+
+.year {
+    margin: 0;
+    font-size: var(--fs-2);
+    color: var(--muted);
+}

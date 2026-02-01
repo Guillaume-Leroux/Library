@@ -1,0 +1,74 @@
+/* src/styles/globals.css */
+@import "./tokens.css";
+
+html {
+    font-family: var(--font-sans);
+    color: var(--text);
+    background: var(--bg);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    line-height: var(--lh-normal);
+    font-size: var(--fs-3);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+/* shared utilities you’ll use everywhere */
+.container {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+}
+
+.pill {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--r-pill);
+    border: var(--border-1) solid var(--border);
+    background: var(--surface);
+    color: var(--text-2);
+    font-size: var(--fs-2);
+    white-space: nowrap;
+}
+
+.card {
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    background: var(--surface);
+    border: var(--border-1) solid var(--border);
+    box-shadow: var(--card-shadow);
+    transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.card:focus-within {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 35%, transparent), var(--card-shadow-hover);
+}
+
+/* color-mix fallback for older browsers */
+@supports not (color: color-mix(in srgb, white 50%, black)) {
+    .card:focus-within {
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35), var(--card-shadow-hover);
+    }
+}
