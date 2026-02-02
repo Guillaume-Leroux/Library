@@ -1,13 +1,12 @@
-/* src/styles/tokens.css */
 :root {
-    /* ---------- Typography ---------- */
-    /* base font size can remain default 16px; we scale via clamp tokens */
+    /*Text*/
+    /* base font 16px */
     --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji",
     "Segoe UI Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
 
-    /* fluid type scale (bounded) */
+    /* Text size */
     --fs-1: clamp(0.75rem, 0.20vw + 0.70rem, 0.85rem); /* xs */
     --fs-2: clamp(0.875rem, 0.25vw + 0.82rem, 0.98rem); /* sm */
     --fs-3: clamp(1rem, 0.30vw + 0.95rem, 1.10rem); /* base */
@@ -19,7 +18,7 @@
     --lh-normal: 1.45;
     --lh-relaxed: 1.65;
 
-    /* ---------- Spacing (rem scale) ---------- */
+    /* spacing */
     --space-1: 0.25rem;
     --space-2: 0.5rem;
     --space-3: 0.75rem;
@@ -31,30 +30,30 @@
     --space-9: 3rem;
     --space-10: 4rem;
 
-    /* ---------- Layout ---------- */
-    --container: 70rem;        /* scales with user font settings */
+    /* Layout */
+    --container: 70rem;        /* scales based on user font */
     --content-narrow: 52rem;
 
-    /* ---------- Radius ---------- */
+    /* Radius */
     --r-1: 0.5rem;
     --r-2: 0.75rem;
     --r-3: 1rem;
     --r-pill: 999px;
 
-    /* ---------- Borders ---------- */
+    /* Borders */
     --border-1: 1px;
     --border-2: 2px;
 
-    /* ---------- Shadows ---------- */
+    /* Shadows */
     --shadow-1: 0 10px 30px rgba(17, 24, 39, 0.06);
     --shadow-2: 0 18px 45px rgba(17, 24, 39, 0.10);
 
-    /* ---------- Motion ---------- */
+    /* Motion */
     --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     --t-fast: 140ms;
     --t-med: 200ms;
 
-    /* ---------- Colors (Light) ---------- */
+    /* Light mode */
     --bg: #f7f8fb;
     --surface: #ffffff;
     --surface-2: #f3f4f6;
@@ -72,13 +71,13 @@
     --accent: #f97316;
     --danger: #dc2626;
 
-    /* ---------- Component defaults ---------- */
+    /* Component defaults */
     --card-radius: var(--r-3);
     --card-shadow: var(--shadow-1);
     --card-shadow-hover: var(--shadow-2);
 }
 
-/* Dark mode: toggle by adding class="theme-dark" on <html> or <body> */
+/* Dark mode  class="theme-dark" in <html> or <body> */
 .theme-dark {
     --bg: #0b1220;
     --surface: #0f172a;

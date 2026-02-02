@@ -2,7 +2,7 @@
   min-height: 100vh;
 }
 
-/* Optional: smooth theme switch (no flashing) */
+/* no flashing */
 @media (prefers-reduced-motion: no-preference) {
   html {
     transition: background-color var(--t-med) var(--ease),
