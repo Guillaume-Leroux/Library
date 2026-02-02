@@ -55,7 +55,7 @@ npm run test
 ```
 
 The current suite includes:
-* **SSearchPage Tests**: Validates input cleaning, UI components, and mock data rendering.
+* **SearchPage Tests**: Validates input cleaning, UI components, and mock data rendering.
 * **BookPage Tests**: Ensures book details and Wikipedia extracts are displayed correctly via API mocks.
 
 ### Project Structure
