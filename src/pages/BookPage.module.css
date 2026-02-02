@@ -22,7 +22,6 @@
     color: var(--text);
 }
 
-/* Cards */
 .card {
     background: var(--surface);
     border: var(--border-1) solid var(--border);
@@ -54,7 +53,6 @@
     font-size: var(--fs-2);
 }
 
-/* Wikipedia content */
 .wikiText {
     margin: 0;
     color: var(--text-2);
@@ -81,7 +79,6 @@
     background: var(--surface-2);
 }
 
-/* Link button */
 .link {
     display: inline-flex;
     align-items: center;

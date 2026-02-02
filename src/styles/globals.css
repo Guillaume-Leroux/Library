@@ -1,4 +1,3 @@
-/* src/styles/globals.css */
 @import "./tokens.css";
 
 html {
@@ -29,7 +28,6 @@ a {
     color: inherit;
 }
 
-/* shared utilities you’ll use everywhere */
 .container {
     width: 100%;
     max-width: var(--container);

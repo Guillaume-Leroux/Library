@@ -27,12 +27,12 @@ export function SearchPage() {
 // quick search
     if (q) clauses.push(q);
 
-// advanced fields (Solr field queries)
+// advanced search
     if (title) clauses.push(`title:"${clean(title)}"`);
     if (author) clauses.push(`author:"${clean(author)}"`);
     if (subject) clauses.push(`subject:"${clean(subject)}"`);
 
-// year filter (exact year)
+// year search
     if (publishYear) {
         const y = clean(publishYear);
         clauses.push(`first_publish_year:[${y} TO ${y}]`);
