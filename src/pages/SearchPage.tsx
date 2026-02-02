@@ -214,7 +214,11 @@ export function SearchPage() {
                                         loading="lazy"
                                     />
                                 ) : (
-                                    <span className={styles.noImage}>No image</span>
+                                    <img
+                                        src="/Book_NC.png"
+                                        alt="No cover available"
+                                        className={styles.coverImg}
+                                    />
                                 )}
                             </div>
                         </div>
