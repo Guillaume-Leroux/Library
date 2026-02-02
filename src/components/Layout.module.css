@@ -1,0 +1,133 @@
+/* src/layout/Layout.module.css */
+
+.header {
+    background: var(--surface);
+    border-bottom: var(--border-1) solid var(--border);
+}
+
+.nav {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.left {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+}
+
+.brand {
+    font-weight: 800;
+    font-size: var(--fs-4);
+    text-decoration: none;
+    color: var(--text);
+}
+
+.link {
+    text-decoration: none;
+    color: var(--text-2);
+    font-size: var(--fs-3);
+}
+
+.link:hover {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.link:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: var(--r-1);
+}
+
+/* Quick search */
+.search {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+}
+
+.input {
+    font-size: var(--fs-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--r-2);
+    border: var(--border-1) solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.input::placeholder {
+    color: var(--muted);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.button {
+    font-size: var(--fs-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--r-2);
+    border: var(--border-1) solid var(--primary);
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: var(--primary-2);
+}
+
+.button:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* Main content */
+.main {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--space-7) var(--space-4);
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+/* Theme toggle button */
+.themeToggle {
+    width: 2.6rem;
+    height: 2.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--r-pill);
+    border: var(--border-1) solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.themeToggle:hover {
+    background: var(--surface-2);
+    transform: translateY(-1px);
+}
+
+.themeToggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
+}
