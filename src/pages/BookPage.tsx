@@ -1,83 +1,107 @@
 import { useParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
 import styles from "./BookPage.module.css";
-
-function isWikiNotFound(wikiData: any) {
-    return (
-        wikiData?.type === "https://mediawiki.org/wiki/HyperSwitch/errors/not_found"
-    );
-}
+import { useBookDetailsWithFallback, useOpenLibraryAuthors } from "../data/bookInfo";
 
 export function BookPage() {
     const { id } = useParams();
 
-    const bookUrl = id ? `https://openlibrary.org/works/${id}.json` : null;
-    const { data: book, isLoading, error } = useFetch<any>(bookUrl);
+    const {
+        isLoading,
+        error,
+        title,
+        description,
+        coverUrl,
+        wikiUrl,
+        book,
+        subjects,
+        firstPublishDate,
+    } = useBookDetailsWithFallback(id);
 
-    const wikiUrl =
-        book?.title ? `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(book.title)}` : null;
+    const { authors, loadingAuthors } = useOpenLibraryAuthors(book);
 
-    const { data: wikiData } = useFetch<any>(wikiUrl);
+    if (isLoading) return <p className={`${styles.center} ${styles.muted}`}>Loading…</p>;
+    if (error) return <div className={styles.error}>Error: {error}</div>;
+    if (!title) return null;
 
-    if (isLoading) {
-        return <p className={`${styles.center} ${styles.muted}`}>Loading…</p>;
-    }
-    if (error) {
-        return <div className={styles.error}>Error: {error}</div>;
-    }
-    if (!book) return null;
-
-    const openLibraryDescription =
-        typeof book.description === "string"
-            ? book.description
-            : book.description?.value || "No description available.";
-
-    const showWiki = wikiData && !isWikiNotFound(wikiData);
+    const shownSubjects = subjects.slice(0, 8); // keep UI clean
 
     return (
         <div className={styles.page}>
-            <header>
-                <h1 className={styles.title}>{book.title}</h1>
-                <p className={styles.desc}>
-                    <span className={styles.label}>Description (Open Library): </span>
-                    {openLibraryDescription}
-                </p>
-            </header>
+            <h1 className={styles.title}>{title}</h1>
 
-            {showWiki && (
-                <section className={styles.card}>
-                    <div className={styles.cardHeader}>
-                        <h2 className={styles.cardTitle}>On Wikipedia</h2>
-                        <span className={styles.badge}>External source</span>
-                    </div>
-
-                    <div className={styles.wikiMedia}>
-                        {wikiData.thumbnail?.source && (
+            <div className={styles.layout}>
+                {/* LEFT: Cover */}
+                <aside className={styles.left}>
+                    <div className={styles.coverCard}>
+                        {coverUrl ? (
                             <img
-                                className={styles.thumb}
-                                src={wikiData.thumbnail.source}
-                                alt={`Cover for ${book.title} (Wikipedia)`}
+                                className={styles.cover}
+                                src={coverUrl}
+                                alt={`Cover for ${title}`}
                                 loading="lazy"
                             />
+                        ) : (
+                            <div className={styles.noCover}>No cover</div>
                         )}
+                    </div>
+                </aside>
 
-                        <div>
-                            <p className={styles.wikiText}>{wikiData.extract}</p>
+                {/* MIDDLE: Description + Wikipedia */}
+                <section className={styles.middle}>
+                    <div className={styles.card}>
+                        <h2 className={styles.sectionTitle}>Description</h2>
+                        <p className={styles.descText}>
+                            {description ?? "No description available."}
+                        </p>
 
-                            {wikiData.content_urls?.desktop?.page && (
-                                <a
-                                    className={styles.link}
-                                    href={wikiData.content_urls.desktop.page}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    See the full article on Wikipedia →
-                                </a>
-                            )}
-                        </div>
+                        {wikiUrl && (
+                            <a className={styles.link} href={wikiUrl} target="_blank" rel="noreferrer">
+                                Read on Wikipedia →
+                            </a>
+                        )}
                     </div>
                 </section>
-            )}
+
+                {/* RIGHT: Info */}
+                <aside className={styles.right}>
+                    <div className={styles.card}>
+                        <h2 className={styles.sectionTitle}>Book information</h2>
+
+                        <dl className={styles.dl}>
+                            <div className={styles.row}>
+                                <dt className={styles.dt}>Author</dt>
+                                <dd className={styles.dd}>
+                                    {loadingAuthors
+                                        ? "Loading…"
+                                        : authors.length > 0
+                                            ? authors.join(", ")
+                                            : "Unknown"}
+                                </dd>
+                            </div>
+
+                            <div className={styles.row}>
+                                <dt className={styles.dt}>First published</dt>
+                                <dd className={styles.dd}>{firstPublishDate ?? "Unknown"}</dd>
+                            </div>
+
+                            <div className={styles.row}>
+                                <dt className={styles.dt}>Genres / subjects</dt>
+                                <dd className={styles.dd}>
+                                    {shownSubjects.length > 0 ? (
+                                        <div className={styles.tags}>
+                                            {shownSubjects.map((s) => (
+                                                <span key={s} className={styles.tag}>{s}</span>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        "Unknown"
+                                    )}
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </aside>
+            </div>
         </div>
     );
 }

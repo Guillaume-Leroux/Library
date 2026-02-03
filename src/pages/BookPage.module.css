@@ -1,25 +1,32 @@
 .page {
     display: grid;
-    gap: var(--space-7);
+    gap: var(--space-6);
 }
 
-/* Header */
 .title {
     font-size: var(--fs-6);
     line-height: var(--lh-tight);
     margin: 0;
 }
 
-.desc {
-    margin: var(--space-3) 0 0;
-    color: var(--text-2);
-    font-size: var(--fs-3);
-    line-height: var(--lh-relaxed);
+/* 3-column responsive layout */
+.layout {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: 1fr;
+    align-items: start;
 }
 
-.label {
-    font-weight: 700;
-    color: var(--text);
+@media (min-width: 960px) {
+    .layout {
+        grid-template-columns: 260px minmax(0, 1fr) 320px;
+    }
+}
+
+.left,
+.middle,
+.right {
+    min-width: 0;
 }
 
 .card {
@@ -30,55 +37,45 @@
     padding: var(--space-6);
 }
 
-.cardHeader {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-4);
-    flex-wrap: wrap;
-    margin-bottom: var(--space-4);
-}
-
-.cardTitle {
-    margin: 0;
+.sectionTitle {
+    margin: 0 0 var(--space-3);
     font-size: var(--fs-4);
 }
 
-.badge {
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--r-pill);
-    border: var(--border-1) solid var(--border);
-    background: var(--surface-2);
-    color: var(--text-2);
-    font-size: var(--fs-2);
-}
-
-.wikiText {
+.descText {
     margin: 0;
     color: var(--text-2);
     line-height: var(--lh-relaxed);
 }
 
-.wikiMedia {
-    margin-top: var(--space-4);
-    display: grid;
-    gap: var(--space-4);
-    align-items: start;
+/* Cover */
+.coverCard {
+    background: var(--surface);
+    border: var(--border-1) solid var(--border);
+    border-radius: var(--r-3);
+    box-shadow: var(--shadow-1);
+    padding: var(--space-4);
 }
 
-@media (min-width: 860px) {
-    .wikiMedia {
-        grid-template-columns: 220px 1fr;
-    }
-}
-
-.thumb {
+.cover {
     width: 100%;
+    height: auto;
     border-radius: var(--r-2);
     border: var(--border-1) solid var(--border);
     background: var(--surface-2);
 }
 
+.noCover {
+    height: 360px;
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    background: var(--surface-2);
+    border-radius: var(--r-2);
+    border: var(--border-1) solid var(--border);
+}
+
+/* Link */
 .link {
     display: inline-flex;
     align-items: center;
@@ -99,6 +96,48 @@
     border-radius: var(--r-1);
 }
 
+/* Definition list */
+.dl {
+    margin: 0;
+    display: grid;
+    gap: var(--space-4);
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: var(--space-3);
+    align-items: start;
+}
+
+.dt {
+    font-weight: 700;
+    color: var(--text);
+    font-size: var(--fs-2);
+}
+
+.dd {
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--fs-3);
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.tag {
+    font-size: var(--fs-1);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--r-2);
+    border: var(--border-1) solid var(--border);
+    background: var(--surface-2);
+    color: var(--text-2);
+}
+
 /* States */
 .center {
     text-align: center;
@@ -113,11 +152,5 @@
     padding: var(--space-4);
     border: var(--border-1) solid var(--danger);
     border-radius: var(--r-2);
-    background: color-mix(in srgb, var(--danger) 8%, transparent);
-}
-
-@supports not (color: color-mix(in srgb, white 50%, black)) {
-    .error {
-        background: rgba(220, 38, 38, 0.08);
-    }
+    background: rgba(220, 38, 38, 0.08);
 }
