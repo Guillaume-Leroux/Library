@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 
-/* -------------------- Open Library types -------------------- */
+/*Open Library type*/
 
 export type OpenLibraryDescription =
     | string
@@ -34,7 +34,7 @@ export interface OpenLibraryTrendingWork {
     first_publish_year?: number;
 }
 
-/* -------------------- Wikipedia types -------------------- */
+/*Wikipedia types*/
 
 export interface WikiThumbnail {
     source: string;
