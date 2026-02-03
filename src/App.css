@@ -2,7 +2,6 @@
   min-height: 100vh;
 }
 
-/* no flashing */
 @media (prefers-reduced-motion: no-preference) {
   html {
     transition: background-color var(--t-med) var(--ease),

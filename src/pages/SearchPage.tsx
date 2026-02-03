@@ -4,7 +4,34 @@ import { useFetch } from "../hooks/useFetch";
 import type { SearchResult } from "../types";
 import styles from "./SearchPage.module.css";
 
-const clean = (str: string) => str.replace(/"/g, "").trim();
+// clean car si user met " " on les enleves au cas ou
+export const clean = (str: string) => str.replace(/"/g, "").trim();
+
+// Themes --> library
+const COMMON_SUBJECTS = [
+    "Arts",
+    "Animals",
+    "Architecture",
+    "Biography",
+    "Business",
+    "Children",
+    "Classic",
+    "Computer Science",
+    "Cooking",
+    "Fantasy",
+    "Fiction",
+    "History",
+    "Horror",
+    "Music",
+    "Mystery",
+    "Plays",
+    "Poetry",
+    "Romance",
+    "Science",
+    "Science Fiction",
+    "Thriller",
+    "Young Adult"
+];
 
 export function SearchPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -25,14 +52,15 @@ export function SearchPage() {
     const clauses: string[] = [];
 
 // quick search
-    if (q) clauses.push(q);
+    if (q) clauses.push("q", q);
 
-// advanced search
+// advanced fields (Solr field queries)
     if (title) clauses.push(`title:"${clean(title)}"`);
     if (author) clauses.push(`author:"${clean(author)}"`);
     if (subject) clauses.push(`subject:"${clean(subject)}"`);
 
-// year search
+
+// year filter (exact year)
     if (publishYear) {
         const y = clean(publishYear);
         clauses.push(`first_publish_year:[${y} TO ${y}]`);
@@ -125,12 +153,18 @@ export function SearchPage() {
 
                     <div className={styles.field}>
                         <label className={styles.label}>Subject / Theme</label>
-                        <input
+                        <select
                             value={localSubject}
                             onChange={(e) => setLocalSubject(e.target.value)}
-                            placeholder="Ex: Fantasy, Magic"
-                            className={styles.input}
-                        />
+                            className={styles.input} // On garde la même classe CSS pour le style
+                        >
+                            <option value="">Any Subject (All)</option>
+                            {COMMON_SUBJECTS.map((subj) => (
+                                <option key={subj} value={subj}>
+                                    {subj}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className={styles.field}>
@@ -180,7 +214,11 @@ export function SearchPage() {
                                         loading="lazy"
                                     />
                                 ) : (
-                                    <span className={styles.noImage}>No image</span>
+                                    <img
+                                        src="/Book_NC.png"
+                                        alt="No cover available"
+                                        className={styles.coverImg}
+                                    />
                                 )}
                             </div>
                         </div>
