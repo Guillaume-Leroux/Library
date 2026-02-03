@@ -74,7 +74,7 @@ export function HomePage() {
     return (
         <>
             <section className={styles.hero}>
-                <h1 className={styles.title}>Library</h1>
+                <h1 className={styles.title}>React Library</h1>
                 <p className={styles.subtitle}>
                     Discover trending reads and follow the latest updates.
                 </p>

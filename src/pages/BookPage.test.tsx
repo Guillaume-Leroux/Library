@@ -16,43 +16,47 @@
         content_urls: { desktop: { page: "http://wiki.com/hp" } }
     };
 
-    // simule url
-    vi.mock('../hooks/useFetch', () => ({
-        useFetch: (url: string | null) => {
-            if (!url) return { data: null, isLoading: false };
-
-            // si url --> "works" (Open Library)
-            if (url.includes('openlibrary.org/works')) {
-                return { data: mockBookData, isLoading: false, error: null };
-            }
-
-            // si url --> "wikipedia" (Wikipedia)
-            if (url.includes('wikipedia.org')) {
-                return { data: mockWikiData, isLoading: false, error: null };
-            }
-
-            return { data: null, isLoading: false, error: null };
-        }
+    // mock simule url avec la fct bookPage modifier apres le merge qui a tout casse
+    vi.mock('../data/bookInfo', () => ({
+        useBookDetailsWithFallback: vi.fn(() => ({
+            isLoading: false,
+            error: null,
+            title: "Harry Potter",
+            description: "A wizard boy...",
+            coverUrl: "http://example.com/cover.jpg",
+            wikiUrl: "http://wiki.com/hp",
+            subjects: ["Magic", "Fantasy"],
+            firstPublishDate: "1997",
+            book: { key: "OL123W" }
+        })),
+        useOpenLibraryAuthors: vi.fn(() => ({
+            authors: ["J.K. Rowling"],
+            loadingAuthors: false
+        }))
     }));
 
     describe('BookPage Integration', () => {
-        it('displays book details and wikipedia extract', () => {
+        it('displays book details and wikipedia link', () => {
             render(
                 <MemoryRouter initialEntries={['/book/OL123W']}>
                     <Routes>
-                        {/* set route pour que useParams get l'id "OL123W" */}
                         <Route path="/book/:id" element={<BookPage />} />
                     </Routes>
                 </MemoryRouter>
             );
 
-            // 1. check titre livre
-            expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Harry Potter');
+            // Vérification du titre
+            expect(screen.getByRole('heading', { name: /Harry Potter/i })).toBeInTheDocument();
 
-            // 2. check wikipedia
-            expect(screen.getByText('On Wikipedia')).toBeInTheDocument();
+            // Vérification de la description
+            expect(screen.getByText(/A wizard boy/i)).toBeInTheDocument();
 
-            // 3. check desc wikipedia
-            expect(screen.getByText(/Harry Potter is a series of novels/i)).toBeInTheDocument();
+            // Vérification du lien Wikipedia (Le texte est "Read on Wikipedia →")
+            const wikiLink = screen.getByRole('link', { name: /Wikipedia/i });
+            expect(wikiLink).toBeInTheDocument();
+            expect(wikiLink).toHaveAttribute('href', 'http://wiki.com/hp');
+
+            // Vérification de l'auteur
+            expect(screen.getByText(/J.K. Rowling/i)).toBeInTheDocument();
         });
     });
