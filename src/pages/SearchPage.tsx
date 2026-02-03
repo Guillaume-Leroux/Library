@@ -52,7 +52,7 @@ export function SearchPage() {
     const clauses: string[] = [];
 
 // quick search
-    if (q) clauses.push(q);
+    if (q) clauses.push("q", q);
 
 // advanced fields (Solr field queries)
     if (title) clauses.push(`title:"${clean(title)}"`);

@@ -68,4 +68,4 @@ The current suite includes:
 
 ### Contributors
 * **Mateo** - Development and Testing.
-* **Guillaume** - Development
+* **Guillaume** - Development.
