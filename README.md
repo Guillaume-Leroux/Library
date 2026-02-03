@@ -24,6 +24,8 @@ node -v
 If you haven't already, navigate to your working directory and clone the repository:
 ```bash
 git clone [https://github.com/Guillaume-Leroux/Library.git](https://github.com/Guillaume-Leroux/Library.git)
+```
+```bash
 cd Library-main
 ```
 
@@ -35,7 +37,7 @@ npm install
 Start the Development Server
 To launch the application in development mode:
 ```bash
-npm run dev
+npm start
 ```
 
 Once started, the terminal will provide a local URL (usually http://localhost:5173). Open this link in your browser to view the application.
@@ -46,7 +48,7 @@ We use Vitest and React Testing Library to ensure the reliability of the applica
 Run All Tests
 To execute the test suite (Search logic, UI rendering, and API integration mocks):
 ```bash
-npm run test
+npm test
 ```
 
 The current suite includes:
