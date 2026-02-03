@@ -124,6 +124,14 @@ export function getWikiPageUrl(
     return wiki.content_urls?.desktop?.page;
 }
 
+export function getWikiPublishDate(wiki?: WikiSummary | null): string | undefined {
+    if (!wiki || isWikiNotFound(wiki)) return undefined;
+
+    const text = wiki.extract ?? "";
+    const match = text.match(/\b(1[0-9]{3}|20[0-9]{2})\b/);
+    return match?.[0];
+}
+
 /* Hook */
 
 export function useWikiSummary(title: string | null) {
@@ -161,6 +169,9 @@ export function useBookDetailsWithFallback(workId?: string) {
 
     const wikiUrl = getWikiPageUrl(wiki);
 
+    const firstPublishDate =
+        book?.first_publish_date ?? getWikiPublishDate(wiki);
+
     return {
         isLoading,
         error,
@@ -171,7 +182,7 @@ export function useBookDetailsWithFallback(workId?: string) {
         book,
         wiki,
         subjects: book?.subjects ?? [],
-        firstPublishDate: book?.first_publish_date,
+        firstPublishDate,
         sources: {
             description: getOpenLibraryDescription(book)
                 ? "openlibrary"
@@ -183,6 +194,11 @@ export function useBookDetailsWithFallback(workId?: string) {
                 : getWikiThumbnail(wiki)
                     ? "wikipedia"
                     : "none",
+            publishDate: book?.first_publish_date
+                ? "openlibrary"
+                : getWikiPublishDate(wiki)
+                    ? "wikipedia"
+                    : "Unknown",
         } as const,
     };
 }
