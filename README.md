@@ -40,11 +40,6 @@ npm run dev
 
 Once started, the terminal will provide a local URL (usually http://localhost:5173). Open this link in your browser to view the application.
 
-Build for Production
-To create an optimized production build:
-```bash
-npm run build
-```
 ### 2. Testing
 We use Vitest and React Testing Library to ensure the reliability of the application's core functions.
 
