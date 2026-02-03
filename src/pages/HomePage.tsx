@@ -2,6 +2,56 @@ import { Link } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 import type { RecentChange } from "../types";
 import styles from "./HomePage.module.css";
+import { getOpenLibraryCoverFromTrending, useWikiSummary, getWikiThumbnail } from "../data/bookInfo";
+
+type TrendingResult = {
+    works: Array<{
+        key: string;
+        title: string;
+        cover_i?: number;
+        author_name?: string[];
+        first_publish_year?: number;
+    }>;
+};
+
+function TrendingCard({ book }: { book: TrendingResult["works"][number] }) {
+    const olCover = getOpenLibraryCoverFromTrending(book);
+    const { data: wiki } = useWikiSummary(olCover ? null : book.title); // only if no OL cover
+    const fallbackCover = getWikiThumbnail(wiki);
+    const coverUrl = olCover ?? fallbackCover;
+
+    return (
+        <div className={styles.card}>
+            <div className={styles.cover}>
+                <div className={styles.coverInner}>
+                    {coverUrl ? (
+                        <img
+                            src={coverUrl}
+                            alt={book.title}
+                            className={styles.coverImg}
+                            loading="lazy"
+                        />
+                    ) : (
+                        <span className={styles.noCover}>No cover</span>
+                    )}
+                </div>
+            </div>
+
+            <div className={styles.cardBody}>
+                <Link to={`/book/${book.key.split("/").pop()}`} className={styles.bookLink}>
+                    {book.title}
+                </Link>
+
+                <div className={styles.meta}>
+                    <p className={styles.author}>{book.author_name?.[0] ?? "Unknown author"}</p>
+                    {book.first_publish_year && (
+                        <p className={styles.year}>Published in {book.first_publish_year}</p>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export function HomePage() {
     const {
@@ -16,9 +66,10 @@ export function HomePage() {
         data: trendingData,
         isLoading: trendingLoading,
         error: trendingError,
-    } = useFetch<any>(
+    } = useFetch<TrendingResult>(
         "https://openlibrary.org/trending/daily.json?limit=12"
     );
+
 
     return (
         <>
@@ -33,47 +84,11 @@ export function HomePage() {
                 <h2 className={styles.sectionTitle}>Popular books recently</h2>
 
                 {trendingLoading && <p className={styles.muted}>Loading trends…</p>}
-                {trendingError && (
-                    <p className={styles.error}>Trends error: {trendingError}</p>
-                )}
+                {trendingError && <p className={styles.error}>Trends error: {trendingError}</p>}
 
                 <div className={styles.grid}>
-                    {trendingData?.works.map((book: any) => (
-                        <div key={book.key} className={styles.card}>
-                            <div className={styles.cover}>
-                                <div className={styles.coverInner}>
-                                    {book.cover_i ? (
-                                        <img
-                                            src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                                            alt={book.title}
-                                            className={styles.coverImg}
-                                        />
-                                    ) : (
-                                        <span className={styles.noCover}>No cover</span>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className={styles.cardBody}>
-                                <Link
-                                    to={`/book/${book.key.split("/").pop()}`}
-                                    className={styles.bookLink}
-                                >
-                                    {book.title}
-                                </Link>
-
-                                <div>
-                                    <p className={styles.author}>
-                                        {book.author_name?.[0] ?? "Unknown author"}
-                                    </p>
-                                    {book.first_publish_year && (
-                                        <p className={styles.year}>
-                                            Published in {book.first_publish_year}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+                    {trendingData?.works.map((book) => (
+                        <TrendingCard key={book.key} book={book} />
                     ))}
                 </div>
             </section>
